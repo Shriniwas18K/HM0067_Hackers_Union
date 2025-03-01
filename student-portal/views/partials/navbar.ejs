@@ -1,0 +1,77 @@
+<nav class="navbar navbar-expand-sm navbar-dark nav_bar">
+  <div class="container height">
+    <a class="navbar-brand d-flex align-items-center" href="/" style="font-size: 0.9rem;">
+      <span class="logo-icon bg-white rounded-circle p-1 me-2 d-flex align-items-center justify-content-center" style="width: 28px; height: 28px;">
+        <i class="fa-solid fa-user text-primary" style="font-size: 1rem;"></i>
+      </span>
+      <span class="fw-bold">Job Portal</span>
+    </a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav me-auto">
+        <li class="nav-item">
+          <a class="nav-link text-white" href="/" style="padding: 5px 10px;">
+            <i class="fa fa-home"></i> Home
+          </a>
+        </li>
+        <% if (currentUser) { %>
+          <li class="nav-item">
+            <a class="nav-link text-white" href="/jobs" style="padding: 5px 10px;">
+              <i class="fa fa-briefcase"></i> Jobs
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link text-white" href="/jobs/applied" style="padding: 5px 10px;">
+              <i class="fa fa-check-circle"></i> Applied
+            </a>
+          </li>
+        <% } %>
+      </ul>
+
+      <% if (currentUser) { %>
+        <form class="d-flex mx-auto" action="/jobs/search" method="GET">
+          <div class="input-group">
+            <input class="form-control form-control-sm" type="search" name="q" placeholder="Search jobs..." style="height: 30px;">
+            <button class="btn btn-light btn-sm" type="submit">
+              <i class="fa fa-search"></i>
+            </button>
+          </div>
+        </form>
+      <% } %>
+
+      <ul class="navbar-nav ms-auto">
+        <% if (!currentUser) { %>
+          <li class="nav-item">
+            <a class="nav-link btn btn-outline-light btn-sm px-2 mx-1" href="/login">Login</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link btn btn-light btn-sm text-primary px-2" href="/register">Register</a>
+          </li>
+        <% } else { %>
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle d-flex align-items-center" href="#" id="profileDropdown" data-bs-toggle="dropdown">
+              <% if (currentUser.profileImage) { %>
+                <img src="<%= currentUser.profileImage %>" class="rounded-circle me-1" width="22" height="22">
+              <% } else { %>
+                <i class="fa fa-user-circle"></i>
+              <% } %>
+              <span class="ms-1"><%= currentUser.name %></span>
+            </a>
+            <ul class="dropdown-menu dropdown-menu-end shadow">
+              <li><a class="dropdown-item" href="/profile">Profile</a></li>
+              <li><a class="dropdown-item" href="/profile/complete">Edit</a></li>
+              <% if (currentUser.isAdmin) { %>
+                <li><a class="dropdown-item" href="/admin">Admin</a></li>
+              <% } %>
+              <li><hr class="dropdown-divider"></li>
+              <li><a class="dropdown-item text-danger" href="/logout">Logout</a></li>
+            </ul>
+          </li>
+        <% } %>
+      </ul>
+    </div>
+  </div>
+</nav>

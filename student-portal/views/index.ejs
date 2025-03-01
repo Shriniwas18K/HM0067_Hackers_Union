@@ -1,0 +1,37 @@
+<%- include('partials/header') %> 
+<%- include('partials/navbar') %>
+<div class="hero-section">
+  <div class="container">
+    <h1>Find Your Dream Job</h1>
+    <p>Connect with top companies and apply for exciting opportunities</p>
+    <div class="cta-buttons">
+      <% if (!currentUser) { %>
+      <a href="/login" class="btn btn-primary">Login</a>
+      <a href="/register" class="btn btn-secondary">Register</a> <% } else { %>
+      <a href="/jobs" class="btn btn-primary">Browse Jobs</a>
+      <a href="/profile" class="btn btn-secondary">View Profile</a> <% } %>
+    </div>
+  </div>
+</div>
+<div class="features-section">
+  <div class="container">
+    <h2>Why Choose Our Job Portal?</h2>
+    <div class="features">
+      <div class="feature">
+        <h3>Top Companies</h3>
+        <p>
+          Connect with leading tech companies looking for talented professionals
+        </p>
+      </div>
+      <div class="feature">
+        <h3>Easy Application</h3>
+        <p>Apply with just one click once your profile is complete</p>
+      </div>
+      <div class="feature">
+        <h3>Profile Showcase</h3>
+        <p>Highlight your skills, projects, and experience to stand out</p>
+      </div>
+    </div>
+  </div>
+</div>
+<%- include('partials/footer') %>
