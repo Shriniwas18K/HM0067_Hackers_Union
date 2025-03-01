@@ -1,0 +1,104 @@
+<%- include('../partials/header') %>
+<%- include('../partials/navbar') %>
+
+<div class="container">
+  <div class="profile-view-card">
+    <h2>Your Profile</h2>
+    
+    <% if (success && success.length > 0) { %>
+      <div class="alert alert-success">
+        <%= success %>
+      </div>
+    <% } %>
+    
+    <div class="profile-section">
+      <h3>Personal Information</h3>
+      <div class="profile-info">
+        <div class="info-item">
+          <span class="label">Name:</span>
+          <span class="value"><%= currentUser.name %></span>
+        </div>
+        
+        <div class="info-item">
+          <span class="label">Email:</span>
+          <span class="value"><%= currentUser.email %></span>
+        </div>
+        
+        <div class="info-item">
+          <span class="label">Phone:</span>
+          <span class="value"><%= currentUser.phoneNumber %></span>
+        </div>
+        
+        <div class="info-item">
+          <span class="label">College:</span>
+          <span class="value">
+            <%= currentUser.college ? currentUser.college : 'Not specified' %>
+          </span>
+        </div>
+        
+        <div class="info-item">
+          <span class="label">Date of Birth:</span>
+          <span class="value">
+            <%= currentUser.dob ? new Date(currentUser.dob).toLocaleDateString() : 'Not specified' %>
+          </span>
+        </div>
+      </div>
+    </div>
+    
+    <div class="profile-section">
+      <h3>Professional Links</h3>
+      <div class="profile-info">
+        <div class="info-item">
+          <span class="label">LeetCode:</span>
+          <span class="value">
+            <% if (currentUser.leetcode) { %>
+              <a href="<%= currentUser.leetcode %>" target="_blank"><%= currentUser.leetcode %></a>
+            <% } else { %>
+              Not specified
+            <% } %>
+          </span>
+        </div>
+        
+        <div class="info-item">
+          <span class="label">GitHub:</span>
+          <span class="value">
+            <% if (currentUser.github) { %>
+              <a href="<%= currentUser.github %>" target="_blank"><%= currentUser.github %></a>
+            <% } else { %>
+              Not specified
+            <% } %>
+          </span>
+        </div>
+        
+        <div class="info-item">
+          <span class="label">LinkedIn:</span>
+          <span class="value">
+            <% if (currentUser.linkedin) { %>
+              <a href="<%= currentUser.linkedin %>" target="_blank"><%= currentUser.linkedin %></a>
+            <% } else { %>
+              Not specified
+            <% } %>
+          </span>
+        </div>
+        
+        <div class="info-item">
+          <span class="label">Resume:</span>
+          <span class="value">
+            <% if (currentUser.resume) { %>
+              <a href="<%= currentUser.resume %>" target="_blank">View Resume</a>
+            <% } else { %>
+              Not uploaded
+            <% } %>
+          </span>
+        </div>
+      </div>
+    </div>
+    
+    <div class="profile-actions">
+      <a href="/profile/complete" class="btn btn-primary">Edit Profile</a>
+      <a href="/jobs/applied" class="btn btn-secondary">View Applied Jobs</a>
+    </div>
+  </div>
+</div>
+
+<%- include('../partials/footer') %>

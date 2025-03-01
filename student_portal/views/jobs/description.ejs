@@ -1,0 +1,57 @@
+<%- include('../partials/header') %>
+<%- include('../partials/navbar') %>
+
+<div class="container">
+  <div class="job-details-card">
+    <% if (error && error.length > 0) { %>
+      <div class="alert alert-danger">
+        <%= error %>
+      </div>
+    <% } %>
+    
+    <div class="job-header">
+      <h2><%= job.title %></h2>
+      <div class="company-name"><%= job.company %></div>
+    </div>
+    
+    <div class="job-info">
+      <div class="info-item">
+        <span class="label">Location:</span>
+        <span class="value"><%= job.location %></span>
+      </div>
+      
+      <div class="info-item">
+        <span class="label">Salary:</span>
+        <span class="value"><%= job.salary %></span>
+      </div>
+      
+      <div class="info-item">
+        <span class="label">Posted On:</span>
+        <span class="value"><%= job.posted.toLocaleDateString() %></span>
+      </div>
+    </div>
+    
+    <div class="job-section">
+      <h3>Job Description</h3>
+      <p><%= job.description %></p>
+    </div>
+    
+    <div class="job-section">
+      <h3>Requirements</h3>
+      <p><%= job.requirements %></p>
+    </div>
+    
+    <div class="job-actions">
+      <% if (hasApplied) { %>
+        <button class="btn btn-success" disabled>Already Applied</button>
+      <% } else { %>
+        <form action="/jobs/<%= job.id %>/apply" method="POST">
+          <button type="submit" class="btn btn-primary">Apply Now</button>
+        </form>
+      <% } %>
+      <a href="/jobs" class="btn btn-secondary">Back to Jobs</a>
+    </div>
+  </div>
+</div>
+
+<%- include('../partials/footer') %>
