@@ -55,9 +55,9 @@ The application follows a dual-portal architecture:
 ### **Admin Backend**
 - Flask
 - PyMongo
-- Flask-JWT-Extended
-- Python-dotenv
-- Pytest
+- SQLite
+- MongoDB
+- pytest
 
 ### **Student Frontend**
 - Node.js
@@ -77,6 +77,12 @@ project_root/
 │   └── admin_backend/
 │       ├── app.py
 │       ├── db.py
+|       ├── tests/
+|       |   |── adminTests.py
+|       |   ├── auth_utilstest.py
+|       |   ├── authtest.py
+|       |   ├── jobstest.py
+|       |   ├── userstests.py
 │       └── routes/
 │           ├── admin.py
 │           ├── auth.py
@@ -88,7 +94,6 @@ project_root/
 │   ├── routes/
 │   ├── views/
 │   └── public/
-└── tests/
 ```
 
 ---
@@ -101,7 +106,7 @@ cd admin/admin_backend
 python -m venv env
 env\Scripts\activate
 pip install -r requirements.txt
-python app.py
+flask run
 ```
 
 ### Student Portal Setup
@@ -116,15 +121,14 @@ npm start
 #### **Admin Backend (.env)**
 ```
 FLASK_APP=app.py
+MONGODB_URI=<your_uri>
 FLASK_ENV=development
-MONGODB_URI=mongodb://localhost:27017/jobportal
-JWT_SECRET=your_secret_key
 ```
 
 #### **Student Portal (.env)**
 ```
 PORT=3000
-MONGODB_URI=mongodb://localhost:27017/jobportal
+MONGODB_URI=<your_uri>
 SESSION_SECRET=your_session_secret
 ```
 
@@ -133,20 +137,20 @@ SESSION_SECRET=your_session_secret
 ## 📚 API Documentation
 
 ### **Admin Routes**
-#### Authentication
-- `POST /api/admin/login` - Admin login
-- `POST /api/admin/logout` - Admin logout
+All routes except registration are authenticated and private.
 
+#### Authentication : Http Basic Stateless
+- `POST /register` - Admin registration (Public route)
+  
 #### Jobs Management
-- `GET /api/jobs` - Retrieve job listings
-- `POST /api/jobs` - Create a new job
-- `PUT /api/jobs/:id` - Update job details
-- `DELETE /api/jobs/:id` - Delete a job
+- `POST /jobs/create`: Create a new job posting.
+- `GET /jobs/application`: Apply for a job using job ID and user ID.
+- `GET /jobs/segragate`: Segregate applications for a specific job.
+- `POST /jobs/shortlist`: Shortlist an application for a job.
+- `GET /jobs/collect`: : Collect job posting details by job ID.
 
 #### User Management
-- `GET /api/users` - List all users
-- `PUT /api/users/:id` - Update user details
-- `DELETE /api/users/:id` - Remove a user
+- `GET /users/{userid}` - Get an user
 
 ### **Student Routes**
 #### Authentication
@@ -204,5 +208,3 @@ npm test
 - **Team ID**: HM0067
 - **Hackathon**: HackMatrix 3.0
 ---
-
-
