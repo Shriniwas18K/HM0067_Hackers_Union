@@ -1,9 +1,16 @@
 from flask import Flask
 from routes.auth import auth
 from routes.admin import admin
+from routes.jobs import jobs
+from routes.users import users
+from db import db_inits
 
 app = Flask(__name__)
+db_inits()
 app.register_blueprint(auth)
 app.register_blueprint(admin)
-if __name__ == '__main__':
+app.register_blueprint(users)
+app.register_blueprint(jobs)
+
+if __name__ == '__main__':      
     app.run(debug=True)
