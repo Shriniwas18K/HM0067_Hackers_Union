@@ -4,8 +4,9 @@ from routes.admin import admin
 from routes.jobs import jobs
 from routes.users import users
 from db import db_inits
-
+from flask_cors import CORS
 app = Flask(__name__)
+CORS(app)
 db_inits()
 app.register_blueprint(auth)
 app.register_blueprint(admin)
