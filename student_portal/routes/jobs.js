@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 const User = require('../models/user');
 const { isAuthenticated, isProfileComplete } = require('../middleware/auth');
-const JobPosting = require('../models/jobPosting');
+const JobPosting = require('../models/jobposting');
 
 // Jobs list router
 router.get('/', isAuthenticated, isProfileComplete, async (req, res) => {
