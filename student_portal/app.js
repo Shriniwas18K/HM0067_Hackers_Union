@@ -8,7 +8,10 @@
   const authRoutes = require('./routes/auth');
   const jobsRoutes = require('./routes/jobs');
   const profileRoutes = require('./routes/profile');
+
+const cors = require('cors'); // Import cors package
   const app = express();
+  app.use(cors());
 
   // Middleware
   app.set("view engine", "ejs");
