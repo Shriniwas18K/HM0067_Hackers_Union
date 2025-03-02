@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Create Job Posting</title>
+  <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+  <div class="container">
+    <header class="header">
+      <h1>Create Job Posting</h1>
+      <a href="/logout" class="btn btn-logout">Logout</a>
+    </header>
+    
+    <% if (locals.success) { %>
+      <div class="alert alert-success">
+        <%= success %>
+      </div>
+    <% } %>
+    
+    <% if (locals.error) { %>
+      <div class="alert alert-error">
+        <%= error %>
+      </div>
+    <% } %>
+    
+    <form action="/jobs/create" method="POST" class="job-form">
+      <div class="form-group">
+        <label for="jobRole">Job Role:</label>
+        <input type="text" id="jobRole" name="jobRole" required>
+      </div>
+      
+      <div class="form-group">
+        <label for="organizationName">Organization Name:</label>
+        <input type="text" id="organizationName" name="organizationName" required>
+      </div>
+      
+      <div class="form-group">
+        <label for="location">Location:</label>
+        <input type="text" id="location" name="location" required>
+      </div>
+      
+      <div class="form-group">
+        <label for="salary">Salary:</label>
+        <input type="text" id="salary" name="salary" required>
+      </div>
+      
+      <div class="form-group">
+        <label for="jobDescription">Job Description:</label>
+        <textarea id="jobDescription" name="jobDescription" rows="5" required></textarea>
+      </div>
+      
+      <div class="form-group">
+        <label for="requirements">Requirements (one per line):</label>
+        <textarea id="requirements" name="requirements" rows="5" required></textarea>
+      </div>
+      
+      <button type="submit" class="btn btn-submit">Create Job Posting</button>
+    </form>
+  </div>
+</body>
+</html>
