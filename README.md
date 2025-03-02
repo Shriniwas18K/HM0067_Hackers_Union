@@ -6,6 +6,9 @@
 WORK CONNECT is a dual-interface job portal system built for HackMatrix 3.0, providing seamless job posting and application management for both administrators and students.
 
 ---
+To login into admin portal use following credentials :
+username: admin
+password: hackerunion
 
 ## ⭐ Key Features
 
