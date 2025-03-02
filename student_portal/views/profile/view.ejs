@@ -1,0 +1,639 @@
+<%- include('../partials/header') %>
+  <%- include('../partials/navbar') %>
+
+    <div class="container profile-container">
+      <div class="profile-view-card">
+        <div class="profile-header">
+          <div class="profile-avatar">
+            <i class="fas fa-user-circle"></i>
+          </div>
+          <h2 class="profile-title">Your Profile</h2>
+        </div>
+
+        <% if (success && success.length> 0) { %>
+          <div class="alert alert-success">
+            <i class="fas fa-check-circle"></i>
+            <%= success %>
+          </div>
+          <% } %>
+
+            <div class="profile-section">
+              <div class="section-header">
+                <i class="fas fa-id-card"></i>
+                <h3 class="section-title">Personal Information</h3>
+              </div>
+              <div class="profile-info">
+                <div class="info-item">
+                  <span class="label"><i class="fas fa-user"></i> Name:</span>
+                  <span class="value">
+                    <%= currentUser.name %>
+                  </span>
+                </div>
+
+                <div class="info-item">
+                  <span class="label"><i class="fas fa-envelope"></i> Email:</span>
+                  <span class="value">
+                    <%= currentUser.email %>
+                  </span>
+                </div>
+
+                <div class="info-item">
+                  <span class="label"><i class="fas fa-phone"></i> Phone:</span>
+                  <span class="value">
+                    <%= currentUser.phoneNumber %>
+                  </span>
+                </div>
+
+                <div class="info-item">
+                  <span class="label"><i class="fas fa-university"></i> College:</span>
+                  <span class="value">
+                    <%= currentUser.college ? currentUser.college : 'Not specified' %>
+                  </span>
+                </div>
+
+                <div class="info-item">
+                  <span class="label"><i class="fas fa-calendar-alt"></i> Date of Birth:</span>
+                  <span class="value">
+                    <%= currentUser.dob ? new Date(currentUser.dob).toLocaleDateString() : 'Not specified' %>
+                  </span>
+                </div>
+              </div>
+            </div>
+
+            <div class="profile-section">
+              <div class="section-header">
+                <i class="fas fa-link"></i>
+                <h3 class="section-title">Professional Links</h3>
+              </div>
+              <div class="profile-info">
+                <div class="info-item">
+                  <span class="label"><i class="fas fa-code"></i> skills:</span>
+                  <span class="value">
+                    <% if (currentUser.skills) { %>
+                      <a target="_blank" class="profile-link">
+                        <%= currentUser.skills %>
+                      </a>
+                      <% } else { %>
+                        <span class="not-specified">Not specified</span>
+                        <% } %>
+                  </span>
+                </div>
+
+                <div class="info-item">
+                  <span class="label"><i class="fab fa-github"></i> GitHub:</span>
+                  <span class="value">
+                    <% if (currentUser.github) { %>
+                      <a href="<%= currentUser.github %>" target="_blank" class="profile-link">
+                        <i class="fas fa-external-link-alt"></i>
+                        <%= currentUser.github %>
+                      </a>
+                      <% } else { %>
+                        <span class="not-specified">Not specified</span>
+                        <% } %>
+                  </span>
+                </div>
+
+                <div class="info-item">
+                  <span class="label"><i class="fab fa-linkedin"></i> LinkedIn:</span>
+                  <span class="value">
+                    <% if (currentUser.linkedin) { %>
+                      <a href="<%= currentUser.linkedin %>" target="_blank" class="profile-link">
+                        <i class="fas fa-external-link-alt"></i>
+                        <%= currentUser.linkedin %>
+                      </a>
+                      <% } else { %>
+                        <span class="not-specified">Not specified</span>
+                        <% } %>
+                  </span>
+                </div>
+
+                <div class="info-item">
+                  <span class="label"><i class="fas fa-file-alt"></i> Resume:</span>
+                  <span class="value">
+                    <% if (currentUser.resume) { %>
+                      <a href="<%= currentUser.resume %>" target="_blank" class="profile-link profile-resume-link">
+                        <i class="fas fa-file-download"></i> View Resume
+                      </a>
+                      <% } else { %>
+                        <span class="not-specified">Not uploaded</span>
+                        <% } %>
+                  </span>
+                </div>
+              </div>
+            </div>
+           
+
+            <div class="profile-actions">
+              <a href="/profile/complete" class="btn btn-primary">
+                <i class="fas fa-edit"></i> Edit Profile
+              </a>
+              <a href="/jobs/applied" class="btn btn-secondary">
+                <i class="fas fa-briefcase"></i> View Applied Jobs
+              </a>
+            </div>
+      </div>
+    </div>
+
+    <%- include('../partials/footer') %>
+
+      <style>
+        .profile-container {
+          padding: 50px 20px;
+          max-width: 900px;
+          margin: 0 auto;
+        }
+
+        .profile-view-card {
+          background: white;
+          border-radius: 16px;
+          box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+          padding: 40px;
+          position: relative;
+          margin-bottom: 40px;
+          border-top: 5px solid #3182ce;
+          transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .profile-view-card:hover {
+          transform: translateY(-5px);
+          box-shadow: 0 15px 35px rgba(0, 0, 0, 0.15);
+        }
+
+        .profile-header {
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          margin-bottom: 30px;
+        }
+
+        .profile-avatar {
+          width: 100px;
+          height: 100px;
+          border-radius: 50%;
+          background: linear-gradient(135deg, #3182ce, #63b3ed);
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          margin-bottom: 20px;
+          box-shadow: 0 8px 16px rgba(49, 130, 206, 0.3);
+        }
+
+        .profile-avatar i {
+          font-size: 50px;
+          color: white;
+        }
+
+        .profile-title {
+          font-family: 'Montserrat', sans-serif;
+          font-size: 28px;
+          font-weight: 700;
+          color: #2d3748;
+          text-align: center;
+          position: relative;
+          padding-bottom: 15px;
+        }
+
+        .profile-title:after {
+          content: "";
+          position: absolute;
+          width: 80px;
+          height: 4px;
+          background: linear-gradient(90deg, #3182ce, #63b3ed);
+          bottom: 0;
+          left: 50%;
+          transform: translateX(-50%);
+          border-radius: 2px;
+        }
+
+        .profile-section {
+          margin-bottom: 35px;
+          background-color: #f8fafc;
+          border-radius: 12px;
+          padding: 25px;
+          border-left: 4px solid #4299e1;
+          box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+          transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .profile-section:hover {
+          transform: translateY(-3px);
+          box-shadow: 0 6px 15px rgba(0, 0, 0, 0.08);
+        }
+
+        .section-header {
+          display: flex;
+          align-items: center;
+          margin-bottom: 20px;
+        }
+
+        .section-header i {
+          font-size: 20px;
+          color: #3182ce;
+          margin-right: 10px;
+        }
+
+        .section-title {
+          font-family: 'Montserrat', sans-serif;
+          font-size: 20px;
+          font-weight: 600;
+          color: #3182ce;
+          margin: 0;
+          padding-bottom: 10px;
+          border-bottom: 1px solid #e2e8f0;
+          width: 100%;
+        }
+
+        .profile-info {
+          display: grid;
+          grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+          gap: 25px;
+        }
+
+        .info-item {
+          display: flex;
+          flex-direction: column;
+          background-color: white;
+          padding: 15px;
+          border-radius: 8px;
+          box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+          transition: transform 0.2s ease;
+        }
+
+        .info-item:hover {
+          transform: translateY(-2px);
+          box-shadow: 0 4px 8px rgba(0, 0, 0, 0.08);
+        }
+
+        .label {
+          font-family: 'Poppins', sans-serif;
+          font-size: 14px;
+          font-weight: 500;
+          color: #718096;
+          margin-bottom: 8px;
+          display: flex;
+          align-items: center;
+        }
+
+        .label i {
+          margin-right: 8px;
+          color: #4299e1;
+          font-size: 16px;
+        }
+
+        .value {
+          font-family: 'Poppins', sans-serif;
+          font-size: 16px;
+          font-weight: 500;
+          color: #2d3748;
+          word-break: break-word;
+        }
+
+        .not-specified {
+          color: #a0aec0;
+          font-style: italic;
+        }
+
+        .profile-link {
+          color: #4299e1;
+          transition: all 0.2s ease;
+          text-decoration: none;
+          display: inline-flex;
+          align-items: center;
+        }
+
+        .profile-link i {
+          margin-right: 5px;
+          font-size: 14px;
+        }
+
+        .profile-link:hover {
+          color: #2b6cb0;
+          text-decoration: underline;
+        }
+
+        .profile-resume-link {
+          display: inline-flex;
+          background-color: #ebf8ff;
+          color: #3182ce;
+          padding: 6px 12px;
+          border-radius: 4px;
+          transition: all 0.2s ease;
+        }
+
+        .profile-resume-link:hover {
+          background-color: #bee3f8;
+          color: #2c5282;
+          text-decoration: none;
+        }
+
+        .profile-completion-status {
+          background: #f8fafc;
+          border-radius: 10px;
+          padding: 20px;
+          margin-bottom: 30px;
+        }
+
+        .completion-label {
+          font-family: 'Montserrat', sans-serif;
+          font-size: 16px;
+          font-weight: 600;
+          color: #4a5568;
+          margin-bottom: 10px;
+        }
+
+        .progress-container {
+          height: 10px;
+          background-color: #e2e8f0;
+          border-radius: 5px;
+          overflow: hidden;
+          margin-bottom: 8px;
+        }
+
+        .progress-bar {
+          height: 100%;
+          background: linear-gradient(90deg, #3182ce, #63b3ed);
+          border-radius: 5px;
+          transition: width 0.6s ease;
+        }
+
+        .completion-percentage {
+          text-align: right;
+          font-family: 'Poppins', sans-serif;
+          font-size: 14px;
+          font-weight: 600;
+          color: #3182ce;
+        }
+
+        .profile-actions {
+          display: flex;
+          gap: 16px;
+          justify-content: center;
+          margin-top: 30px;
+        }
+
+        .btn {
+          font-family: 'Montserrat', sans-serif;
+          font-weight: 600;
+          padding: 12px 28px;
+          border-radius: 8px;
+          font-size: 15px;
+          transition: all 0.3s ease;
+          text-decoration: none;
+          display: inline-flex;
+          align-items: center;
+          justify-content: center;
+        }
+
+        .btn i {
+          margin-right: 8px;
+        }
+
+        .btn-primary {
+          background: linear-gradient(90deg, #3182ce, #4299e1);
+          color: white;
+          border: none;
+        }
+
+        .btn-primary:hover {
+          background: linear-gradient(90deg, #2c5282, #3182ce);
+          box-shadow: 0 6px 15px rgba(49, 130, 206, 0.4);
+          transform: translateY(-3px);
+        }
+
+        .btn-secondary {
+          background: white;
+          color: #3182ce;
+          border: 2px solid #3182ce;
+        }
+
+        .btn-secondary:hover {
+          background-color: #ebf8ff;
+          transform: translateY(-3px);
+          box-shadow: 0 6px 15px rgba(66, 153, 225, 0.2);
+        }
+
+        .alert-success {
+          background-color: #c6f6d5;
+          border-color: #9ae6b4;
+          color: #276749;
+          border-radius: 8px;
+          padding: 16px;
+          margin-bottom: 25px;
+          font-family: 'Poppins', sans-serif;
+          display: flex;
+          align-items: center;
+        }
+
+        .alert-success i {
+          color: #38a169;
+          font-size: 18px;
+          margin-right: 10px;
+        }
+
+        @media (max-width: 768px) {
+          .profile-container {
+            padding: 30px 15px;
+          }
+
+          .profile-view-card {
+            padding: 25px 20px;
+          }
+
+          .profile-info {
+            grid-template-columns: 1fr;
+            gap: 15px;
+          }
+
+          .profile-actions {
+            flex-direction: column;
+            gap: 15px;
+          }
+
+          .profile-actions .btn {
+            width: 100%;
+          }
+
+          .profile-avatar {
+            width: 80px;
+            height: 80px;
+          }
+
+          .profile-avatar i {
+            font-size: 40px;
+          }
+
+          .profile-title {
+            font-size: 24px;
+          }
+
+          .section-title {
+            font-size: 18px;
+          }
+        }
+
+        @media (max-width: 480px) {
+          .profile-section {
+            padding: 20px 15px;
+          }
+
+          .info-item {
+            padding: 12px;
+            padding: 12px;
+          }
+
+          .btn {
+            padding: 10px 24px;
+            font-size: 14px;
+          }
+
+          .profile-avatar {
+            width: 70px;
+            height: 70px;
+          }
+
+          .profile-avatar i {
+            font-size: 35px;
+          }
+        }
+
+        /* Animations */
+        @keyframes fadeIn {
+          from {
+            opacity: 0;
+            transform: translateY(10px);
+          }
+
+          to {
+            opacity: 1;
+            transform: translateY(0);
+          }
+        }
+
+        .profile-view-card {
+          animation: fadeIn 0.5s ease forwards;
+        }
+
+        .profile-section:nth-child(2) {
+          animation: fadeIn 0.5s ease 0.1s forwards;
+        }
+
+        .profile-section:nth-child(3) {
+          animation: fadeIn 0.5s ease 0.2s forwards;
+        }
+
+        .profile-completion-status {
+          animation: fadeIn 0.5s ease 0.3s forwards;
+        }
+
+        .profile-actions {
+          animation: fadeIn 0.5s ease 0.4s forwards;
+        }
+
+        /* Highlight effect for values */
+        .value {
+          position: relative;
+          transition: all 0.3s ease;
+        }
+
+        .value:hover {
+          color: #3182ce;
+        }
+
+        /* Badge style for not specified items */
+        .not-specified {
+          display: inline-block;
+          padding: 3px 8px;
+          background-color: #f7fafc;
+          border-radius: 4px;
+          border: 1px dashed #cbd5e0;
+          font-size: 13px;
+        }
+
+        /* Custom scrollbar for profile sections if content overflows */
+        .profile-section {
+          max-height: 500px;
+          overflow-y: auto;
+          scrollbar-width: thin;
+          scrollbar-color: #cbd5e0 #f7fafc;
+        }
+
+        .profile-section::-webkit-scrollbar {
+          width: 6px;
+        }
+
+        .profile-section::-webkit-scrollbar-track {
+          background: #f7fafc;
+        }
+
+        .profile-section::-webkit-scrollbar-thumb {
+          background-color: #cbd5e0;
+          border-radius: 6px;
+        }
+
+        /* Improved focus styles for accessibility */
+        .btn:focus,
+        .profile-link:focus {
+          outline: none;
+          box-shadow: 0 0 0 3px rgba(66, 153, 225, 0.5);
+        }
+
+        /* Tooltip for longer links */
+        .profile-link {
+          position: relative;
+          max-width: 100%;
+          white-space: nowrap;
+          overflow: hidden;
+          text-overflow: ellipsis;
+          display: inline-block;
+        }
+
+        .profile-link:hover::after {
+          content: attr(href);
+          position: absolute;
+          bottom: -30px;
+          left: 0;
+          background: #2d3748;
+          color: white;
+          padding: 5px 10px;
+          border-radius: 4px;
+          font-size: 12px;
+          white-space: nowrap;
+          z-index: 10;
+          box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16);
+        }
+
+        /* Print styles */
+        @media print {
+          .profile-container {
+            padding: 0;
+          }
+
+          .profile-view-card {
+            box-shadow: none;
+            border: 1px solid #e2e8f0;
+          }
+
+          .profile-actions,
+          .profile-completion-status {
+            display: none;
+          }
+
+          .profile-avatar {
+            display: none;
+          }
+
+          .profile-title:after {
+            display: none;
+          }
+
+          .info-item:hover {
+            transform: none;
+            box-shadow: none;
+          }
+
+          .profile-section:hover {
+            transform: none;
+            box-shadow: none;
+          }
+        }
+      </style>

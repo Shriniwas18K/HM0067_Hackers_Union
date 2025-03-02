@@ -1,0 +1,433 @@
+<%- include('../partials/header') %>
+  <%- include('../partials/navbar') %>
+    <style>
+      .profile-container {
+        padding: 50px 20px;
+        max-width: 800px;
+        margin: 0 auto;
+      }
+
+      .profile-card {
+        background: white;
+        border-radius: 16px;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        padding: 40px;
+        position: relative;
+        margin-bottom: 40px;
+        border-top: 5px solid #3182ce;
+        animation: fadeIn 0.5s ease forwards;
+      }
+
+      @keyframes fadeIn {
+        from {
+          opacity: 0;
+          transform: translateY(10px);
+        }
+
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      .profile-card-header {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        margin-bottom: 30px;
+        text-align: center;
+      }
+
+      .profile-icon {
+        font-size: 48px;
+        color: #3182ce;
+        margin-bottom: 15px;
+        background: #ebf8ff;
+        width: 90px;
+        height: 90px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        box-shadow: 0 5px 15px rgba(66, 153, 225, 0.3);
+      }
+
+      .profile-card h2 {
+        font-family: 'Montserrat', sans-serif;
+        font-size: 28px;
+        font-weight: 700;
+        color: #2d3748;
+        margin-bottom: 10px;
+        position: relative;
+        padding-bottom: 15px;
+      }
+
+      .profile-card h2:after {
+        content: "";
+        position: absolute;
+        width: 80px;
+        height: 4px;
+        background: linear-gradient(90deg, #3182ce, #63b3ed);
+        bottom: 0;
+        left: 50%;
+        transform: translateX(-50%);
+        border-radius: 2px;
+      }
+
+      .alert {
+        border-radius: 8px;
+        padding: 16px;
+        margin-bottom: 25px;
+        font-family: 'Poppins', sans-serif;
+        display: flex;
+        align-items: center;
+      }
+
+      .alert-danger {
+        background-color: #fed7d7;
+        border-color: #feb2b2;
+        color: #c53030;
+      }
+
+      .alert i {
+        margin-right: 10px;
+        font-size: 18px;
+      }
+
+      .form-section {
+        margin-bottom: 30px;
+        background-color: #f8fafc;
+        border-radius: 12px;
+        padding: 25px;
+        border-left: 4px solid #4299e1;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+        transition: transform 0.2s ease, box-shadow 0.2s ease;
+      }
+
+      .form-section:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 6px 15px rgba(0, 0, 0, 0.08);
+      }
+
+      .form-section-title {
+        font-family: 'Montserrat', sans-serif;
+        font-size: 18px;
+        font-weight: 600;
+        color: #3182ce;
+        margin-top: 0;
+        margin-bottom: 20px;
+        padding-bottom: 10px;
+        border-bottom: 1px solid #e2e8f0;
+      }
+
+      .form-row {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 20px;
+      }
+
+      .form-group {
+        margin-bottom: 20px;
+      }
+
+      .form-group label {
+        display: block;
+        font-family: 'Poppins', sans-serif;
+        font-weight: 500;
+        font-size: 15px;
+        color: #4a5568;
+        margin-bottom: 8px;
+      }
+
+      .form-group label i {
+        color: #3182ce;
+        margin-right: 6px;
+      }
+
+      .form-control {
+        width: 100%;
+        padding: 12px 15px;
+        border: 1px solid #e2e8f0;
+        border-radius: 8px;
+        font-family: 'Poppins', sans-serif;
+        font-size: 15px;
+        color: #2d3748;
+        transition: all 0.3s ease;
+      }
+
+      .form-control:focus {
+        outline: none;
+        border-color: #4299e1;
+        box-shadow: 0 0 0 3px rgba(66, 153, 225, 0.2);
+      }
+
+      .form-control::placeholder {
+        color: #a0aec0;
+      }
+
+      .custom-file-upload {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+        align-items: center;
+      }
+
+      .form-control-file {
+        position: absolute;
+        width: 1px;
+        height: 1px;
+        padding: 0;
+        margin: -1px;
+        overflow: hidden;
+        clip: rect(0, 0, 0, 0);
+        border: 0;
+      }
+
+      .upload-button {
+        display: inline-flex;
+        align-items: center;
+        padding: 10px 15px;
+        background: linear-gradient(90deg, #3182ce, #4299e1);
+        color: white;
+        border-radius: 6px;
+        font-family: 'Montserrat', sans-serif;
+        font-weight: 600;
+        font-size: 14px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+      }
+
+      .upload-button:hover {
+        background: linear-gradient(90deg, #2c5282, #3182ce);
+        box-shadow: 0 4px 12px rgba(49, 130, 206, 0.3);
+        transform: translateY(-2px);
+      }
+
+      .upload-button i {
+        margin-right: 8px;
+      }
+
+      .file-name {
+        font-family: 'Poppins', sans-serif;
+        color: #718096;
+        font-size: 14px;
+        flex-grow: 1;
+      }
+
+      .current-resume {
+        display: flex;
+        align-items: center;
+        margin-top: 10px;
+        padding: 8px 12px;
+        background-color: #e6fffa;
+        border-radius: 6px;
+        font-family: 'Poppins', sans-serif;
+        color: #2c7a7b;
+      }
+
+      .current-resume i {
+        color: #38b2ac;
+        margin-right: 10px;
+      }
+
+      .current-resume small {
+        margin-right: 10px;
+      }
+
+      .view-resume {
+        margin-left: auto;
+        color: #3182ce;
+        text-decoration: none;
+        font-weight: 500;
+        transition: color 0.2s ease;
+      }
+
+      .view-resume:hover {
+        color: #2b6cb0;
+        text-decoration: underline;
+      }
+
+      .form-actions {
+        margin-top: 30px;
+      }
+
+      .btn {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        font-family: 'Montserrat', sans-serif;
+        font-weight: 600;
+        font-size: 16px;
+        padding: 14px 28px;
+        border: none;
+        border-radius: 8px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+      }
+
+      .btn-primary {
+        background: linear-gradient(90deg, #3182ce, #4299e1);
+        color: white;
+      }
+
+      .btn-primary:hover {
+        background: linear-gradient(90deg, #2c5282, #3182ce);
+        box-shadow: 0 8px 20px rgba(49, 130, 206, 0.3);
+        transform: translateY(-3px);
+      }
+
+      .btn-block {
+        width: 100%;
+      }
+
+      .btn i {
+        margin-right: 8px;
+      }
+
+      @media (max-width: 768px) {
+        .profile-container {
+          padding: 30px 15px;
+        }
+
+        .profile-card {
+          padding: 30px 20px;
+        }
+
+        .form-row {
+          grid-template-columns: 1fr;
+          gap: 0;
+        }
+
+        .form-section {
+          padding: 20px;
+        }
+
+        .current-resume {
+          flex-direction: column;
+          align-items: flex-start;
+        }
+
+        .view-resume {
+          margin-left: 0;
+          margin-top: 8px;
+        }
+      }
+    </style>
+    <div class="container profile-container">
+      <div class="profile-card">
+        <div class="profile-card-header">
+          <i class="fas fa-user-edit profile-icon"></i>
+          <h2>Complete Your Profile</h2>
+        </div>
+
+        <% if (error && error.length> 0) { %>
+          <div class="alert alert-danger">
+            <i class="fas fa-exclamation-circle"></i>
+            <%= error %>
+          </div>
+          <% } %>
+
+            <form action="/profile/complete" method="POST" enctype="multipart/form-data">
+              <div class="form-section">
+                <h3 class="form-section-title">Personal Details</h3>
+                <div class="form-row">
+                  <div class="form-group">
+                    <label for="college">
+                      <i class="fas fa-university"></i> College/University
+                    </label>
+                    <input type="text" id="college" name="college" class="form-control"
+                      value="<%= currentUser.college || '' %>" placeholder="Enter your college or university">
+                  </div>
+
+                  <div class="form-group">
+                    <label for="dob">
+                      <i class="fas fa-calendar-alt"></i> Date of Birth
+                    </label>
+                    <input type="date" id="dob" name="dob" class="form-control"
+                      value="<%= currentUser.dob ? new Date(currentUser.dob).toISOString().split('T')[0] : '' %>">
+                  </div>
+                </div>
+              </div>
+
+              <div class="form-section">
+                <h3 class="form-section-title">Professional Profiles</h3>
+                <div class="form-group">
+                  <label for="skills">
+                    <i class="fas fa-code"></i> Skills
+                  </label>
+                  <input type="String" id="skills" name="skills" class="form-control"
+                    value="<%= currentUser.skills || '' %>" placeholder="skills">
+                </div>
+
+                <div class="form-group">
+                  <label for="github">
+                    <i class="fab fa-github"></i> GitHub Profile URL
+                  </label>
+                  <input type="url" id="github" name="github" class="form-control"
+                    value="<%= currentUser.github || '' %>" placeholder="https://github.com/yourusername">
+                </div>
+
+                <div class="form-group">
+                  <label for="linkedin">
+                    <i class="fab fa-linkedin"></i> LinkedIn Profile URL
+                  </label>
+                  <input type="url" id="linkedin" name="linkedin" class="form-control"
+                    value="<%= currentUser.linkedin || '' %>" placeholder="https://linkedin.com/in/yourusername">
+                </div>
+              </div>
+
+              <div class="form-section">
+                <h3 class="form-section-title">Documents</h3>
+                <div class="form-group resume-upload">
+                  <label for="resume">
+                    <i class="fas fa-file-pdf"></i> Resume (PDF)
+                  </label>
+                  <div class="custom-file-upload">
+                    <input type="file" id="resume" name="resume" class="form-control-file" accept=".pdf">
+                    <div class="upload-button">
+                      <i class="fas fa-cloud-upload-alt"></i> Choose File
+                    </div>
+                    <div class="file-name">No file chosen</div>
+                  </div>
+                  <% if (currentUser.resume) { %>
+                    <div class="current-resume">
+                      <i class="fas fa-check-circle"></i>
+                      <small>You have already uploaded a resume. Upload again to replace it.</small>
+                      <a href="<%= currentUser.resume %>" target="_blank" class="view-resume">View Current Resume</a>
+                    </div>
+                    <% } %>
+                </div>
+              </div>
+
+              <div class="form-actions">
+                <button type="submit" class="btn btn-primary btn-block">
+                  <i class="fas fa-save"></i> Save Profile
+                </button>
+              </div>
+            </form>
+      </div>
+    </div>
+
+    <%- include('../partials/footer') %>
+      <script>
+        /* Custom script to show selected file name */
+        document.addEventListener('DOMContentLoaded', function () {
+          const fileInput = document.getElementById('resume');
+          const fileName = document.querySelector('.file-name');
+          const uploadButton = document.querySelector('.upload-button');
+
+          if (fileInput && fileName && uploadButton) {
+            uploadButton.addEventListener('click', function () {
+              fileInput.click();
+            });
+
+            fileInput.addEventListener('change', function () {
+              if (fileInput.files.length > 0) {
+                fileName.textContent = fileInput.files[0].name;
+              } else {
+                fileName.textContent = 'No file chosen';
+              }
+            });
+          }
+        });
+      </script>

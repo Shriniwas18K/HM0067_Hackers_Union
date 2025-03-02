@@ -1,0 +1,128 @@
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    // Fix for Bootstrap dropdown
+    const dropdownToggle = document.getElementById('profileDropdown');
+    if (dropdownToggle) {
+      // Check if Bootstrap's dropdown is available
+      if (typeof bootstrap !== 'undefined' && bootstrap.Dropdown) {
+        // Use Bootstrap's dropdown
+        const dropdown = new bootstrap.Dropdown(dropdownToggle);
+        
+        // Optional: manually toggle dropdown on click if needed
+        dropdownToggle.addEventListener('click', function(e) {
+          e.preventDefault();
+          dropdown.toggle();
+        });
+      } else {
+        // Fallback if Bootstrap JS is not loaded
+        const dropdownMenu = dropdownToggle.nextElementSibling;
+        
+        dropdownToggle.addEventListener('click', function(e) {
+          e.preventDefault();
+          dropdownMenu.classList.toggle('show');
+        });
+        
+        // Close dropdown when clicking outside
+        document.addEventListener('click', function(e) {
+          if (!dropdownToggle.contains(e.target) && !dropdownMenu.contains(e.target)) {
+            dropdownMenu.classList.remove('show');
+          }
+        });
+      }
+    }
+  });
+</script>
+
+<style>
+  /* Ensure dropdown is visible when shown */
+  .dropdown-menu.show {
+    display: block;
+    position: absolute;
+    transform: translate3d(0px, 38px, 0px);
+    top: 0px;
+    left: auto;
+    right: 0px;
+    will-change: transform;
+  }
+</style>
+
+<nav class="navbar navbar-expand-sm navbar-dark nav_bar">
+  <div class="container height">
+    <a class="navbar-brand d-flex align-items-center" href="/" style="font-size: 0.9rem;">
+      <span class="logo-icon bg-white rounded-circle p-1 me-2 d-flex align-items-center justify-content-center" style="width: 28px; height: 28px;">
+        <i class="fa-solid fa-user text-primary" style="font-size: 1rem;"></i>
+      </span>
+      <span class="fw-bold">WORKCONNECT </span>
+    </a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav me-auto">
+        <li class="nav-item">
+          <a class="nav-link text-white" href="/" style="padding: 5px 10px;">
+            <i class="fa fa-home"></i> Home
+          </a>
+        </li>
+        <% if (currentUser) { %>
+          <li class="nav-item">
+            <a class="nav-link text-white" href="/jobs" style="padding: 5px 10px;">
+              <i class="fa fa-briefcase"></i> Jobs
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link text-white" href="/jobs/applied" style="padding: 5px 10px;">
+              <i class="fa fa-check-circle"></i> Applied
+            </a>
+          </li>
+        <% } %>
+      </ul>
+
+      <% if (currentUser) { %>
+        <form class="d-flex mx-auto" action="/jobs/search" method="GET">
+          <div class="input-group">
+            <input class="form-control form-control-sm" type="search" name="q" placeholder="Search jobs..." style="height: 30px;">
+            <button class="btn btn-light btn-sm" type="submit">
+              <!-- <i class="fa fa-search"></i> -->
+            </button>
+          </div>
+        </form>
+      <% } %>
+
+      <ul class="navbar-nav ms-auto">
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle d-flex align-items-center" href="#" id="profileDropdown" data-bs-toggle="dropdown">
+            <% if (currentUser && currentUser.profileImage) { %>
+              <img src="<%= currentUser.profileImage %>" class="rounded-circle me-1" width="22" height="22">
+            <% } else { %>
+              <i class="fa fa-user-circle"></i>
+            <% } %>
+            <span class="ms-1">
+              <% if (currentUser) { %>
+                <%= currentUser.name %>
+              <% } else { %>
+                Guest
+              <% } %>
+            </span>
+          </a>
+          <ul class="dropdown-menu dropdown-menu-end shadow">
+            <% if (currentUser) { %>
+              <li><a class="dropdown-item" href="/profile">Profile</a></li>
+              <li><a class="dropdown-item" href="/profile/complete">Edit</a></li>
+              <% if (currentUser.isAdmin) { %>
+                <li><a class="dropdown-item" href="/admin">Admin</a></li>
+              <% } %>
+              <li><hr class="dropdown-divider"></li>
+              <li><a class="dropdown-item text-danger" href="/logout">Logout</a></li>
+            <% } else { %>
+              <li><a class="dropdown-item" href="/login">Login</a></li>
+              <li><a class="dropdown-item" href="/register">Register</a></li>
+            <% } %>
+          </ul>
+        </li>
+      </ul>
+      
+    </div>
+  </div>
+</nav>

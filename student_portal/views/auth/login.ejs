@@ -1,0 +1,352 @@
+<%- include('../partials/header') %> 
+<%- include('../partials/navbar') %>  
+
+<div class="auth-container">
+  <div class="auth-card">
+    <h2>Login</h2>
+    
+    <% if (error && error.length > 0) { %>
+      <div class="alert alert-danger">
+        <%= error %>
+      </div>
+    <% } %>
+    
+    <% if (success && success.length > 0) { %>
+      <div class="alert alert-success">
+        <%= success %>
+      </div>
+    <% } %>
+    
+    <form action="/login" method="POST">
+      <div class="form-group">
+        <label for="email">Email</label>
+        <input type="email" id="email" name="email" class="form-control" required>
+      </div>
+      
+      <div class="form-group">
+        <label for="password">Password</label>
+        <input type="password" id="password" name="password" class="form-control" required>
+      </div>
+      
+      <button type="submit" class="btn btn-primary btn-block">Login</button>
+    </form>
+    
+    <div class="auth-footer">
+      <p>Don't have an account? <a href="/register">Register</a></p>
+    </div>
+  </div>
+</div>
+
+<style>
+  .auth-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 80vh;
+    padding: 40px 20px;
+    background-color: #f9fafb;
+    font-family: 'Poppins', sans-serif;
+  }
+
+  .auth-card {
+    width: 100%;
+    max-width: 450px;
+    background-color: #ffffff;
+    border-radius: 20px;
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+    padding: 40px;
+    position: relative;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    border-top: 5px solid #4361ee;
+    animation: fadeIn 0.6s ease forwards;
+    overflow: hidden;
+  }
+
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  .auth-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+  }
+
+  .auth-card:before {
+    content: "";
+    position: absolute;
+    top: -80px;
+    right: -80px;
+    width: 200px;
+    height: 200px;
+    background: linear-gradient(135deg, rgba(67, 97, 238, 0.1), rgba(58, 12, 163, 0.05));
+    border-radius: 50%;
+    z-index: 0;
+  }
+
+  .auth-card h2 {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 32px;
+    font-weight: 700;
+    color: #1a1a2e;
+    margin-bottom: 30px;
+    text-align: center;
+    position: relative;
+    background: linear-gradient(90deg, #1a1a2e, #4361ee);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .alert {
+    padding: 15px;
+    margin-bottom: 20px;
+    border-radius: 12px;
+    font-weight: 500;
+    animation: slideIn 0.4s ease forwards;
+  }
+
+  @keyframes slideIn {
+    from {
+      opacity: 0;
+      transform: translateX(-10px);
+    }
+    to {
+      opacity: 1;
+      transform: translateX(0);
+    }
+  }
+
+  .alert-danger {
+    background-color: rgba(254, 215, 215, 0.9);
+    border-left: 4px solid #e53e3e;
+    color: #c53030;
+  }
+
+  .alert-success {
+    background-color: rgba(198, 246, 213, 0.9);
+    border-left: 4px solid #38a169;
+    color: #2f855a;
+  }
+
+  .form-group {
+    margin-bottom: 24px;
+    animation: fadeUp 0.5s ease forwards;
+    opacity: 0;
+  }
+
+  .form-group:nth-child(1) {
+    animation-delay: 0.1s;
+  }
+
+  .form-group:nth-child(2) {
+    animation-delay: 0.2s;
+  }
+
+  @keyframes fadeUp {
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  .form-group label {
+    display: block;
+    font-weight: 600;
+    margin-bottom: 10px;
+    color: #4a5568;
+    font-size: 15px;
+    transition: transform 0.2s ease, color 0.2s ease;
+  }
+
+  .form-group:focus-within label {
+    color: #4361ee;
+    transform: translateX(5px);
+  }
+
+  .form-control {
+    width: 100%;
+    padding: 16px;
+    border: 2px solid #e2e8f0;
+    border-radius: 12px;
+    font-size: 15px;
+    transition: all 0.3s ease;
+    color: #2d3748;
+    background-color: #fff;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.03) inset;
+  }
+
+  .form-control:focus {
+    outline: none;
+    border-color: #4361ee;
+    box-shadow: 0 0 0 4px rgba(67, 97, 238, 0.15);
+  }
+
+  .form-control::placeholder {
+    color: #a0aec0;
+  }
+
+  .btn {
+    display: inline-block;
+    font-weight: 600;
+    text-align: center;
+    white-space: nowrap;
+    vertical-align: middle;
+    user-select: none;
+    border: 1px solid transparent;
+    padding: 0.75rem 1.5rem;
+    font-size: 1rem;
+    line-height: 1.5;
+    border-radius: 12px;
+    transition: all 0.3s ease;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+    z-index: 1;
+    margin-top: 10px;
+  }
+
+  .btn:after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(255, 255, 255, 0.1);
+    z-index: -2;
+    transform: scaleX(0);
+    transform-origin: right;
+    transition: transform 0.5s ease;
+  }
+
+  .btn:hover:after {
+    transform: scaleX(1);
+    transform-origin: left;
+  }
+
+  .btn-primary {
+    background: linear-gradient(135deg, #4361ee, #3a0ca3);
+    border-color: transparent;
+    color: white;
+    box-shadow: 0 8px 15px rgba(67, 97, 238, 0.2);
+    animation: fadeIn 0.6s ease forwards;
+    animation-delay: 0.3s;
+  }
+
+  .btn-primary:hover {
+    box-shadow: 0 12px 20px rgba(67, 97, 238, 0.3);
+    transform: translateY(-3px);
+  }
+
+  .btn-primary:active {
+    transform: translateY(1px);
+    box-shadow: 0 5px 10px rgba(67, 97, 238, 0.2);
+  }
+
+  .btn-block {
+    display: block;
+    width: 100%;
+    padding: 15px;
+    font-size: 16px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+  }
+
+  .btn-block:before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(
+      90deg,
+      transparent,
+      rgba(255, 255, 255, 0.2),
+      transparent
+    );
+    transition: 0.5s;
+  }
+
+  .btn-block:hover:before {
+    left: 100%;
+  }
+
+  .auth-footer {
+    margin-top: 30px;
+    text-align: center;
+    font-size: 15px;
+    color: #4a5568;
+    animation: fadeIn 0.6s ease forwards;
+    animation-delay: 0.4s;
+  }
+
+  .auth-footer a {
+    color: #4361ee;
+    font-weight: 600;
+    text-decoration: none;
+    position: relative;
+    transition: all 0.3s ease;
+  }
+
+  .auth-footer a:after {
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 2px;
+    bottom: -2px;
+    left: 0;
+    background-color: #4361ee;
+    transform: scaleX(0);
+    transform-origin: right;
+    transition: transform 0.3s ease;
+  }
+
+  .auth-footer a:hover {
+    color: #3a0ca3;
+  }
+
+  .auth-footer a:hover:after {
+    transform: scaleX(1);
+    transform-origin: left;
+  }
+
+  /* Responsive adjustments */
+  @media (max-width: 768px) {
+    .auth-card {
+      padding: 30px 25px;
+    }
+    
+    .auth-card h2 {
+      font-size: 28px;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .auth-container {
+      padding: 30px 15px;
+    }
+    
+    .auth-card {
+      padding: 25px 20px;
+      border-radius: 16px;
+    }
+    
+    .form-control {
+      padding: 14px;
+    }
+    
+    .btn-block {
+      padding: 14px;
+    }
+  }
+</style>
+
+<%- include('../partials/footer') %>
